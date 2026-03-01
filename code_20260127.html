@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>个人简历 | 邓昕芃</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", sans-serif;
+    }
+    body {
+      background: #f0f2f5;
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .resume {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    }
+    /* 头部布局：稳定的弹性布局 */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 3px solid #0078ff;
+      min-width: 600px;
+    }
+    .header-main {
+      flex: 1;
+      padding-right: 10px; /* 减少右侧间距，让右侧内容左移 */
+    }
+    .header-main h1 {
+      font-size: 36px;
+      color: #111;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .header-main .job {
+      font-size: 18px;
+      color: #0078ff;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+    .contact-list {
+      list-style: none;
+      font-size: 14px;
+      color: #666;
+    }
+    .contact-list li {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .contact-list li svg {
+      width: 16px;
+      height: 16px;
+      color: #0078ff;
+    }
+    /* 头像+二维码容器：向左移动，调整宽度和对齐方式 */
+    .right-container {
+      width: 420px; /* 缩小宽度，左移 */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* 左对齐，不再居中 */
+    }
+    /* 头像样式：左对齐 */
+    .avatar-box {
+      text-align: left;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    .avatar-box img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid #e8f4ff;
+      object-fit: cover;
+      margin: 0 auto; /* 头像本身仍居中，整体容器左移 */
+      display: block;
+    }
+    /* 二维码容器：左对齐 */
+    .qrcode-box {
+      display: flex;
+      gap: 10px; /* 缩小二维码间距，适配宽度 */
+      align-items: center;
+      justify-content: flex-start; /* 左对齐 */
+      width: 100%;
+    }
+    .qrcode-item {
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .qrcode-item img {
+      width: 70px; /* 缩小二维码尺寸，适配左移后的布局 */
+      height: 70px;
+      border: 1px solid #eee;
+      padding: 5px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+    }
+    .qrcode-item p {
+      font-size: 12px;
+      color: #666;
+      white-space: nowrap;
+    }
+    /* 通用板块样式：统一间距，解决打印空隙问题 */
+    .section {
+      margin-bottom: 25px; /* 减少默认间距，打印时更紧凑 */
+      padding: 0;
+    }
+    .section-title {
+      font-size: 20px;
+      color: #111;
+      margin-bottom: 15px; /* 减少标题下方间距 */
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+    .section-title::before {
+      content: "";
+      width: 6px;
+      height: 20px;
+      background: #0078ff;
+      border-radius: 3px;
+    }
+    /* 工作/项目经历样式 */
+    .exp-item {
+      margin-bottom: 20px; /* 减少项目项间距 */
+      position: relative;
+      padding-left: 15px;
+    }
+    .exp-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      background: #0078ff;
+      border-radius: 50%;
+    }
+    .exp-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px; /* 减少头部间距 */
+    }
+    .exp-company {
+      font-size: 17px;
+      color: #111;
+      font-weight: 600;
+    }
+    .exp-time {
+      font-size: 14px;
+      color: #999;
+      background: #f8f9fa;
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+    .exp-position {
+      font-size: 15px;
+      color: #0078ff;
+      margin-bottom: 8px; /* 减少职位间距 */
+      font-weight: 500;
+    }
+    .exp-desc {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px; /* 减少描述间距 */
+    }
+    .exp-list {
+      list-style: none;
+      font-size: 14px;
+      color: #666;
+      padding-left: 10px;
+    }
+    .exp-list li {
+      margin-bottom: 6px; /* 减少列表项间距 */
+      position: relative;
+      padding-left: 15px;
+    }
+    .exp-list li::before {
+      content: "✓";
+      color: #0078ff;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .exp-achievement {
+      margin-top: 8px; /* 减少成果间距 */
+      font-size: 14px;
+      color: #333;
+      background: #f0f7ff;
+      padding: 8px 12px; /* 减少内边距 */
+      border-radius: 8px;
+      border-left: 4px solid #0078ff;
+    }
+    .exp-achievement strong {
+      color: #0078ff;
+    }
+    /* 技能板块：卡片式 */
+    .skills-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .skill-card {
+      flex: 1;
+      min-width: 200px;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+      border-top: 3px solid #0078ff;
+    }
+    .skill-card h4 {
+      font-size: 16px;
+      color: #111;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .skill-tag {
+      font-size: 13px;
+      color: #0078ff;
+      background: #e8f4ff;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+    /* 教育经历 */
+    .edu-item {
+      font-size: 14px;
+      color: #666;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px dashed #eee;
+    }
+    .edu-info {
+      font-weight: 500;
+    }
+    .edu-honor {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #999;
+      padding-left: 10px;
+    }
+    /* 自我评价 */
+    .intro-text {
+      font-size: 14px;
+      color: #666;
+      text-align: justify;
+      line-height: 1.8;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    /* 打印样式：重点修复间距+图片位置问题 */
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+        margin: 0 auto;
+        width: 100%;
+        line-height: 1.5; /* 打印时行高更紧凑 */
+      }
+      .resume {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 20px;
+        width: 100%;
+      }
+      /* 打印时头部改用表格布局 - 核心修改：调整宽度+强制对齐 */
+      .header {
+        display: table !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        border-collapse: separate !important;
+        margin-bottom: 25px !important; /* 减少头部底部间距 */
+        padding-bottom: 15px !important;
+      }
+      .header-main {
+        display: table-cell !important;
+        width: 70% !important; /* 调整宽度：减少左侧占比，给右侧留足够空间 */
+        padding-right: 10px !important;
+        vertical-align: top !important;
+      }
+      .right-container {
+        display: table-cell !important;
+        width: 30% !important; /* 调整宽度：适配打印介质 */
+        vertical-align: top !important;
+        text-align: left !important;
+        padding: 0 !important; /* 移除默认内边距 */
+        margin: 0 !important; /* 移除默认外边距 */
+      }
+      /* 强制图片尺寸稳定 + 核心修复：重置margin/对齐 */
+      .avatar-box {
+        width: 100% !important;
+        margin: 0 0 8px 0 !important;
+        padding: 0 !important;
+      }
+      .avatar-box img {
+        width: 90px !important;
+        height: 90px !important;
+        margin: 0 !important; /* 移除auto margin，避免居中偏移 */
+        display: block !important;
+        float: left !important; /* 强制左浮，避免偏右 */
+      }
+      .qrcode-box {
+        display: flex !important;
+        justify-content: flex-start !important;
+        gap: 5px !important; /* 进一步缩小间距，适配打印宽度 */
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        flex-wrap: nowrap !important; /* 禁止换行，避免显示不全 */
+      }
+      .qrcode-item {
+        width: 30% !important; /* 均分宽度，避免溢出 */
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .qrcode-item img {
+        width: 60px !important; /* 进一步缩小，适配打印宽度 */
+        height: 60px !important;
+        border: 1px solid #333 !important;
+        margin: 0 auto 5px auto !important;
+        display: block !important;
+      }
+      .qrcode-item p {
+        font-size: 10px !important; /* 缩小文字，避免占宽 */
+      }
+      /* 打印时强制减少所有间距 */
+      .section {
+        margin-bottom: 15px !important; /* 打印时板块间距最小化 */
+        page-break-inside: avoid;
+        padding: 0 !important;
+      }
+      .section-title {
+        margin-bottom: 10px !important;
+      }
+      .exp-item {
+        margin-bottom: 15px !important;
+      }
+      /* 禁止打印时自动分页导致的空隙 */
+      .resume * {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      /* 手动设置必要间距，避免挤在一起 */
+      .header {
+        margin-bottom: 20px !important;
+      }
+      .section-title {
+        margin-bottom: 10px !important;
+      }
+      .exp-item {
+        margin-bottom: 10px !important;
+      }
+      .exp-header {
+        margin-bottom: 5px !important;
+      }
+      .exp-position {
+        margin-bottom: 5px !important;
+      }
+      .exp-desc {
+        margin-bottom: 5px !important;
+      }
+      .exp-achievement {
+        margin-top: 5px !important;
+        margin-bottom: 10px !important;
+      }
+      /* 保留背景和样式 */
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+
+    /* 移动端适配 */
+    @media (max-width: 768px) {
+      .header {
+        display: block;
+        min-width: auto;
+      }
+      .header-main {
+        width: 100%;
+        padding-right: 0;
+        margin-bottom: 20px;
+      }
+      .right-container {
+        width: 100%;
+        margin-top: 20px;
+        align-items: center;
+      }
+      .qrcode-box {
+        width: 100%;
+        justify-content: space-around;
+      }
+      .skill-card {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="resume">
+    <!-- 头部：姓名+联系方式 + 右侧头像+二维码 -->
+    <div class="header">
+      <div class="header-main">
+        <h1>邓昕芃</h1>
+        <div class="job">2001.01.19 | 25岁 | 男</div>
+        <div class="job">全栈开发工程师 | 3年工作经验</div>
+        <ul class="contact-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span>13050483925</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <span>deng1265739808@163.com</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            <span>北京 · 求职意向：全栈/java</span>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- 右侧头像+二维码：左移后的布局 -->
+      <div class="right-container">
+        <!-- 个人头像 -->
+        <div class="avatar-box">
+          <img src="E:\（北科）初试资料\考研报名\证件照\1.jpg" alt="邓昕芃头像">
+        </div>
+        <!-- 3个二维码 -->
+        <div class="qrcode-box">
+          <div class="qrcode-item">
+            <img src="https://via.placeholder.com/80" alt="GitHub二维码">
+            <p>GitHub</p>
+          </div>
+          <div class="qrcode-item">
+            <img src="E:\（北科）初试资料\考研报名\证件照\小红书.jpg" alt="个人作品集">
+            <p>小红书</p>
+          </div>
+          <div class="qrcode-item">
+            <img src="E:\（北科）初试资料\考研报名\证件照\微信.jpg" alt="微信二维码">
+            <p>微信:d1920905492</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 工作经历 -->
+    <div class="section">
+      <h3 class="section-title">工作经历</h3>
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-company">韩亚银行（中国）有限公司</div>
+          <div class="exp-time">2023.07 - 至今</div>
+        </div>
+        <div class="exp-position">科技部-系统开发处-全栈开发工程师</div>
+        <div class="exp-desc">负责行内企业网银、银企直连以及电子票据系统的开发和维护工作。</div>
+        <ul class="exp-list">
+          <li>基于Vue+SpringBoot开发，前后端分离架构</li>
+          <li>满足业务部门及客户实际使用需求。</li>
+          <li>系统日常维护、排查客户报错、整理系统维护文档等工作。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 核心项目 -->
+    <div class="section">
+      <h3 class="section-title">核心项目</h3>
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-company">企业网银</div>
+          <div class="exp-time">技术栈：Vue+SpringBoot+Dart+Oracle</div>
+        </div>
+        <div class="exp-desc">企业网上银行，满足客户需求进行开发和日常维护</div>
+        <ul class="exp-list">
+          <li>采用前后端分离模式，前端使用Vue3+Pinia+Element Plus，后端使用SpringBoot+MyBatis-Plus</li>
+          <li>参与行内新核心接口改造工作，负责接口开发及测试。</li>
+          <li>开发企业网银端的通知存款自动化，免除多余的客户端操作，降低企业未能及时通知的风险。</li>
+          <li>利用Redis锁解决网银交易授权时产生的重复交易，保障客户资金安全。</li>
+        </ul>
+        <div class="exp-achievement">
+          <strong>项目成果：</strong><br/>
+          （1）适配行内新核心系统接口改造（2）开发通知存款自动化功能。（3）解决网银交易授权时产生的重复交易。
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-company">银企直连</div>
+          <div class="exp-time">技术栈：SpringBoot+Dobbo</div>
+        </div>
+        <div class="exp-desc">企业通过特定格式报文与银行间的直接交易，付款查询等。</div>
+        <ul class="exp-list">
+          <li>协助企业完成直连接口开发、直连前置机安装、上线后维保等工作。</li>
+          <li>独立开发电子回单接口，使客户通过该接口获取交易明细并根据返回值生成PDF文件</li>
+          <li>独立开发单位卡查询功能，客户通过该接口可查询特定条件下的单位卡交易明细</li>
+        </ul>
+        <div class="exp-achievement">
+          <strong>项目成果：</strong><br/>
+          （1）交易明细回单接口开发（2）单位卡交易明细查询接口开发（3）协助客户接入直连系统。
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-company">电子票据系统</div>
+          <div class="exp-time">技术栈：React+SpringBoot+MongoDB+OSS</div>
+        </div>
+        <div class="exp-desc">新一代电子票据系统，需求开发和维护工作。</div>
+        <ul class="exp-list">
+          <li>参与行内新核心接口改造工作，负责接口开发及测试。</li>
+          <li>开发我行承兑汇票明细批量导出功能。实现承兑和贴现票据信息的批量导出，极大提升柜员工作效率。</li>
+          <li>负责新旧电票系统的合并及旧票据的后续处理工作。</li>
+        </ul>
+        <div class="exp-achievement">
+          <strong>项目成果：</strong><br/>
+          （1）适配行内新核心系统接口改造（2）新旧电子票据系统合并。
+        </div>
+      </div>
+    </div>
+
+    <!-- 专业技能 -->
+    <div class="section">
+      <h3 class="section-title">专业技能</h3>
+      <div class="skills-wrap">
+        <div class="skill-card">
+          <h4>前端技术</h4>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML5/CSS3/JavaScript</span>
+            <span class="skill-tag">Vue3/Vue2</span>
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">Flutter</span>
+            <span class="skill-tag">微信小程序</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h4>后端技术</h4>
+          <div class="skill-tags">
+            <span class="skill-tag">Java/SpringBoot</span>
+            <span class="skill-tag">MyBatis-Plus</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">Linux</span>
+            <span class="skill-tag">nginx/Redis/nacos</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h4>开发工具</h4>
+          <div class="skill-tags">
+            <span class="skill-tag">Git/GitHub</span>
+            <span class="skill-tag">IDEA</span>
+            <span class="skill-tag">Postman</span>
+            <span class="skill-tag">VS Code</span>
+            <span class="skill-tag">Xshell</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 教育经历 -->
+    <div class="section">
+      <h3 class="section-title">教育经历</h3>
+      <div class="edu-item">
+        <div class="edu-info">大连理工大学城市学院 | 软件工程 | 本科</div>
+        <div class="exp-time">2019.09 - 2023.06</div>
+      </div>
+      <div class="edu-honor">荣誉：校三好学生2次、优秀学生标兵1次，计算机大赛省级三等奖 | 主修：数据结构、软件工程、前后端开发、计算机组成原理</div>
+    </div>
+
+    <!-- 自我评价 -->
+    <div class="section">
+      <h3 class="section-title">自我评价</h3>
+      <p class="intro-text">
+        3年全栈开发经验，深耕前端（Vue/React）与后端（SpringBoot/MyBatis）技术，具备从需求分析、技术选型、架构设计到落地交付的全流程能力，熟悉企业级项目开发。
+        注重代码质量与工程化，擅长性能优化与问题排查，能独立负责复杂模块开发，也能高效参与团队协作，具备良好的技术文档编写与跨部门沟通能力。
+        热爱技术并持续学习，能更好地理解用户需求，实现技术与产品的结合。
+        性格踏实严谨，有较强的责任心与技术攻坚意识，能快速适应业务变化，为项目落地与团队成长提供技术支持。
+      </p>
+    </div>
+  </div>
+</body>
+</html>
